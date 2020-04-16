@@ -28,11 +28,41 @@ class ReviewBuilder {
   }
 
   buildReviewsPromises() {
-    // FIXME
+    return Promise.all([
+      readFile("./data/products.json"),
+      readFile("./data/reviews.json"),
+      readFile("./data/users.json"),
+    ]).then(([products, reviews, users]) => {
+      const parsedProducts = JSON.parse(products);
+      const parsedReviews = JSON.parse(reviews);
+      const parsedUsers = JSON.parse(users);
+      const mappedData = {
+        products: parsedProducts,
+        reviews: parsedReviews,
+        users: parsedUsers,
+      };
+      return produceResult(mappedData);
+    });
   }
 
+  //🍕
   async buildReviewsAsyncAwait() {
-    // FIXME
+    const allData = await Promise.all([
+      readFile("./data/products.json"),
+      readFile("./data/reviews.json"),
+      readFile("./data/users.json"),
+    ]).then(([products, reviews, users]) => {
+      const parsedProducts = JSON.parse(products);
+      const parsedReviews = JSON.parse(reviews);
+      const parsedUsers = JSON.parse(users);
+      const mappedData = {
+        products: parsedProducts,
+        reviews: parsedReviews,
+        users: parsedUsers,
+      };
+      return produceResult(mappedData);
+    });
+    return allData;
   }
 }
 
